@@ -50,6 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUsername("khalil")
                 .password(encoder().encode("admin"))
                 .roles("ADMIN").build());
+        manager.createUser(User
+                .withUsername("tester")
+                .password(encoder().encode("tester"))
+                .roles("ADMIN").build());
         return manager;
     }
 
