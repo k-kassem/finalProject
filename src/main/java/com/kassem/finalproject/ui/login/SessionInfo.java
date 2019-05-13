@@ -6,16 +6,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
+import com.kassem.finalproject.config.MyUserDetails;
+
 @Component
 @Scope("session")
 public class SessionInfo {
-    private User user;
+    private MyUserDetails user;
 
     @Nullable
-    public User getCurrentUser() {
+    public MyUserDetails getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (user == null && principal instanceof User) {
-            user = (User) principal;
+        if (user == null && principal instanceof MyUserDetails) {
+            user = (MyUserDetails) principal;
         }
         return user;
     }

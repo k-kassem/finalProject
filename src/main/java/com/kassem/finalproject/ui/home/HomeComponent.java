@@ -10,8 +10,8 @@ import com.vaadin.flow.router.RouterLink;
 public class HomeComponent extends VerticalLayout {
 
     public HomeComponent() {
-        Label greeting = new Label("Hello anonymous!");
+        Label greeting = new Label("Here To Add information in a form  to the hr manager be hired ");
         add(greeting);
-        add(new RouterLink("Go to login page", LoginComponent.class));
+        add(new RouterLink("Fill the form to be Added later", LoginComponent.class));
     }
 }
