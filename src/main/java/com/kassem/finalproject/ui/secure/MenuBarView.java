@@ -1,7 +1,7 @@
 package com.kassem.finalproject.ui.secure;
 
-import com.kassem.finalproject.ui.view.book.BookView;
 import com.kassem.finalproject.ui.view.category.CategoryView;
+import com.kassem.finalproject.ui.view.user.UserView;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -25,7 +25,7 @@ public class MenuBarView extends HorizontalLayout implements RouterLayout {
         add(menu);
 
         addMenuElement(SecureView.class, "Secure", VaadinIcon.LOCK);
-        addMenuElement(BookView.class, "Books", VaadinIcon.BOOK);
+        addMenuElement(UserView.class, "Users", VaadinIcon.USER);
         addMenuElement(CategoryView.class, "Categories", VaadinIcon.CAR);
     }
 
