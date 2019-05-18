@@ -55,6 +55,18 @@ public class User {
 		this.role = role;
 	}
 	
+	public enum RoleValues{
+		    Admin {
+		        public String toString() {
+		            return "Admin";
+		        }
+		    },
+		    User{
+		    	public String ToString() {
+		    		return "User";
+		    	}
+		    }
+		}
 	
 	
 
