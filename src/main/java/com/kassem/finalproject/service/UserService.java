@@ -25,4 +25,10 @@ public class UserService {
 		//userRepository.save(/*user*/);
 		return "Todo";
 	}
+	public void save(User user) {
+		userRepository.save(user);
+	}
+	public void delete(User user) {
+		userRepository.delete(user);
+	}
 }

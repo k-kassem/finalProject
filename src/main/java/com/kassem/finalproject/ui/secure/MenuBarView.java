@@ -15,7 +15,11 @@ import com.vaadin.flow.router.RouterLayout;
 
 @ParentLayout(SecureComponent.class)
 public class MenuBarView extends HorizontalLayout implements RouterLayout {
-    private VerticalLayout menu;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private VerticalLayout menu;
 
     public MenuBarView() {
         setSizeFull();
