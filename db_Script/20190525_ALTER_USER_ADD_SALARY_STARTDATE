@@ -1,0 +1,2 @@
+ALTER TABLE user ADD Salary int(255);
+ALTER TABLE user ADD StartDate Date(255);

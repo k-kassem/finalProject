@@ -1,0 +1,3 @@
+ALTER TABLE user ADD age number(100);
+ALTER TABLE user ADD Status text(255);
+ALTER TABLE user ADD department text(255);
