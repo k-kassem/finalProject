@@ -58,5 +58,9 @@ public class MyUserDetails implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	public String getRole() {
+		return user.getRole();
+	}
 
 }

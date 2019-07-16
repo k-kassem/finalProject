@@ -1,4 +1,4 @@
-package com.kassem.finalproject.ui.view.category;
+package com.kassem.finalproject.dataprovider;
 
 import java.util.List;
 import java.util.stream.Stream;

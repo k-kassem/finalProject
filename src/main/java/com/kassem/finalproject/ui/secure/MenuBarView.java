@@ -1,5 +1,7 @@
 package com.kassem.finalproject.ui.secure;
 
+import com.kassem.finalproject.ui.joboffer.JobOfferView;
+import com.kassem.finalproject.ui.login.SessionInfo;
 import com.kassem.finalproject.ui.view.category.CategoryView;
 import com.kassem.finalproject.ui.view.user.UserView;
 import com.vaadin.flow.component.AttachEvent;
@@ -22,15 +24,19 @@ public class MenuBarView extends HorizontalLayout implements RouterLayout {
 	private VerticalLayout menu;
 
     public MenuBarView() {
+    	SessionInfo session = new SessionInfo();
         setSizeFull();
         menu = new VerticalLayout();
         menu.setSizeUndefined();
         menu.setSpacing(false);
         add(menu);
 
-        addMenuElement(SecureView.class, "Secure", VaadinIcon.LOCK);
-        addMenuElement(UserView.class, "Users", VaadinIcon.USER);
-        addMenuElement(CategoryView.class, "Categories", VaadinIcon.CAR);
+        if(session.getCurrentUser().getRole().equalsIgnoreCase("Admin")){
+        	addMenuElement(UserView.class, "Users", VaadinIcon.USER);
+        	addMenuElement(JobOfferView.class, "New Offer", VaadinIcon.NEWSPAPER);
+        }
+       // addMenuElement(SecureView.class, "Secure", VaadinIcon.LOCK);
+        //addMenuElement(CategoryView.class, "Categories", VaadinIcon.CAR);
     }
 
     private void addMenuElement(Class<? extends Component> navigationTarget,

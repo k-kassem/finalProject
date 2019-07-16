@@ -7,14 +7,15 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.haijian.Exporter;
 
+import com.kassem.finalproject.dataprovider.UserDataProvider;
 import com.kassem.finalproject.model.User;
 import com.kassem.finalproject.model.User.Departement;
 import com.kassem.finalproject.model.User.RoleValues;
 import com.kassem.finalproject.model.User.Status;
 import com.kassem.finalproject.service.UserService;
 import com.kassem.finalproject.ui.secure.MenuBarView;
-import com.kassem.finalproject.ui.view.category.UserDataProvider;
 import com.kassem.finalproject.utils.AppUtils;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -24,6 +25,7 @@ import com.vaadin.flow.component.crud.CrudEditor;
 import com.vaadin.flow.component.crud.CrudVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -34,8 +36,9 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.LocalDateTimeToDateConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.StreamResource;
 
-@Route(value = "book", layout = MenuBarView.class)
+@Route(value = "user", layout = MenuBarView.class)
 public class UserView extends VerticalLayout {
 
 	/**
@@ -118,7 +121,9 @@ public class UserView extends VerticalLayout {
     	newItemButton.getElement().setAttribute("new-button", true);
 
     	Crud<User> crud = new Crud<>(User.class, createPersonEditor());
-    	crud.setToolbar(footer, newItemButton);
+    	Anchor anchor = new Anchor(new StreamResource("my-excel.xlsx", Exporter.exportAsExcel(crud.getGrid())), "Download As Excel");
+    	
+    	crud.setToolbar(footer,anchor, newItemButton);
         crud.getGrid().removeColumnByKey("id");
         crud.setDataProvider(userDataProvider);
         crud.addThemeVariants(CrudVariant.NO_BORDER);

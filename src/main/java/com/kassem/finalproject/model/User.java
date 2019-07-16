@@ -23,6 +23,7 @@ public class User {
 	private Integer salary;
 	private LocalDate startDate;
 	
+	
 	public User(String username, String password,String email,String role ,Integer age,String status,
 			String department,Integer salary,LocalDate startDate) {
 		this.username = username;
