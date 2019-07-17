@@ -191,6 +191,21 @@ public class JobOffer {
 		},
 	}
 	
+	public JobOffer copy(JobOffer jobOffer,JobOffer newOffer) {
+		newOffer.setId(jobOffer.getId());
+		newOffer.setCompanyName(jobOffer.getCompanyName());
+		newOffer.setDeadLine(jobOffer.getDeadLine());
+		newOffer.setDescription(jobOffer.getDescription());
+		newOffer.setEducation(jobOffer.getEducation());
+		newOffer.setEmployementType(jobOffer.getEmployementType());
+		newOffer.setJobTitle(jobOffer.getJobTitle());
+		newOffer.setLocation(jobOffer.getLocation());
+		newOffer.setNumberOfApplication(jobOffer.getNumberOfApplication());
+		newOffer.setSeniorityLevel(jobOffer.getSeniorityLevel());
+		newOffer.setSkills(jobOffer.getSkills());
+		newOffer.setExperience(jobOffer.getExperience());
+		return newOffer;
+	}
 	
 	
 }

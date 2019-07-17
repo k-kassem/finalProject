@@ -1,6 +1,9 @@
 package com.kassem.finalproject.ui.login;
 
 import ch.qos.logback.classic.Logger;
+
+import com.kassem.finalproject.model.User;
+import com.kassem.finalproject.service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
@@ -34,6 +37,8 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
 
     @Autowired
     private AuthenticationManager authManager;
+    @Autowired
+    private UserService userService;
 
     public LoginComponent() {
         setAlignItems(Alignment.CENTER);
@@ -79,6 +84,7 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
             Authentication authenticate = authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             if (authenticate.isAuthenticated()) {
                 SecurityContext context = SecurityContextHolder.getContext();
+                User user = userService.getUserByUsername(username);
 
                 context.setAuthentication(authenticate);
                 return true;
