@@ -39,10 +39,12 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 
 @Route(value = "newOffer", layout = MenuBarView.class)
+@PageTitle("Job Offer")
 public class JobOfferView extends VerticalLayout{
 
 	@Autowired

@@ -14,6 +14,9 @@ public class User {
 	@Id
 	private long id;
 	private String username;
+	private String firstName;
+	private String lastName;
+	private String address;
 	private String password;
 	private String email;
 	private String role;
@@ -24,7 +27,7 @@ public class User {
 	private LocalDate startDate;
 	
 	
-	public User(String username, String password,String email,String role ,Integer age,String status,
+	public User(String username,String firstName,String lastName,String address, String password,String email,String role ,Integer age,String status,
 			String department,Integer salary,LocalDate startDate) {
 		this.username = username;
 		this.password = password;
@@ -100,6 +103,24 @@ public class User {
 		this.startDate = startDate;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	public enum RoleValues{
 	    Admin {

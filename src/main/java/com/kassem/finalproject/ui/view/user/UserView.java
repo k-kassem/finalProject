@@ -35,10 +35,12 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.LocalDateTimeToDateConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 
 @Route(value = "user", layout = MenuBarView.class)
+@PageTitle("Users")
 public class UserView extends VerticalLayout {
 
 	/**
@@ -59,7 +61,11 @@ public class UserView extends VerticalLayout {
 	}
 
 	private CrudEditor<User> createPersonEditor() {
-        TextField firstName = new TextField("User Name");
+        
+		TextField userName = new TextField("User Name");
+		TextField firstName = new TextField("First Name");
+		TextField lastName = new TextField("Last Name");
+		TextField address = new TextField("Address");
         PasswordField password = new PasswordField("Password");
         TextField emailField = new TextField("Email");
         
@@ -77,11 +83,14 @@ public class UserView extends VerticalLayout {
         TextField salaryField = new TextField("Salary");
         
         DatePicker datePicker = new DatePicker("Start Date"); 
-        FormLayout form = new FormLayout(firstName, password,emailField,ageField,roleCbx,statusCbx,deptCbx,salaryField,datePicker);
+        FormLayout form = new FormLayout(userName,firstName,lastName,address, password,emailField,ageField,roleCbx,statusCbx,deptCbx,salaryField,datePicker);
 
        
         Binder<User> binder = new Binder<User>(User.class);
-        binder.bind(firstName,User::getUsername ,User::setUserName);
+        binder.bind(userName,User::getUsername ,User::setUserName);
+        binder.bind(firstName,User::getFirstName ,User::setFirstName);
+        binder.bind(lastName,User::getLastName ,User::setLastName);
+        binder.bind(address,User::getAddress ,User::setAddress);
         binder.bind(password, User::getPassword, User::setPassword);
         
 		binder.forField(emailField)

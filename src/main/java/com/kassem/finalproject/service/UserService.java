@@ -35,4 +35,17 @@ public class UserService {
 	public User getUserByUsername(String userName) {
 		return userRepository.findByusername(userName);
 	}
+	public User getUserById(Long id) {
+		return userRepository.findById(id).get();
+	}
+	public String updateUser(Long id,String firstName,String lastName,String email,String address,String password,String status) {
+		User user = getUserById(id);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setEmail(email);
+		user.setPassword(password);
+		user.setStatus(status);
+		userRepository.save(user);
+		return "User Updated";
+	}
 }

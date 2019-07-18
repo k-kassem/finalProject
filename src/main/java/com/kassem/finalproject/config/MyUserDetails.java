@@ -63,4 +63,7 @@ public class MyUserDetails implements UserDetails{
 		return user.getRole();
 	}
 
+	public Long getId() {
+		return user.getId();
+	}
 }
