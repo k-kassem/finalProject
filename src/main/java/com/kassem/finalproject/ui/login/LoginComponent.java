@@ -2,7 +2,9 @@ package com.kassem.finalproject.ui.login;
 
 import ch.qos.logback.classic.Logger;
 
+import com.kassem.finalproject.model.DailyAttend;
 import com.kassem.finalproject.model.User;
+import com.kassem.finalproject.service.DailyAttendService;
 import com.kassem.finalproject.service.UserService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -16,6 +18,11 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.Route;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Random;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,6 +46,8 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
     private AuthenticationManager authManager;
     @Autowired
     private UserService userService;
+    @Autowired
+    private DailyAttendService dailyAttendService;
 
     public LoginComponent() {
         setAlignItems(Alignment.CENTER);
@@ -71,9 +80,11 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
         String username = usernameField.getValue();
         String password = passwordField.getValue();
         loginButton.setEnabled(false);
-        if (login(username, password)) {
-            loginButton.getUI().ifPresent(ui -> ui.navigate("secure"));
-        } else {
+		if (login(username, password)) {
+			DailyAttend dailyAttend = createDailyAttend();
+			dailyAttendService.saveDailyAttend(dailyAttend);
+			loginButton.getUI().ifPresent(ui -> ui.navigate("secure"));
+		} else {
             logoutLabel.setVisible(true);
             loginButton.setEnabled(true);
         }
@@ -84,8 +95,6 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
             Authentication authenticate = authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             if (authenticate.isAuthenticated()) {
                 SecurityContext context = SecurityContextHolder.getContext();
-                User user = userService.getUserByUsername(username);
-
                 context.setAuthentication(authenticate);
                 return true;
             }
@@ -106,5 +115,20 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
             logoutLabel.setVisible(true);
             logoutLabel.setText("You have been successfully logged out");
         }
+    }
+    private DailyAttend createDailyAttend() {
+    	SessionInfo session = new SessionInfo();
+    	DailyAttend dailyAttend = new DailyAttend();
+    	String  userId = String.valueOf(session.getCurrentUser().getId()) ;
+    	String userName = session.getCurrentUser().getUsername();
+    	String startTime = String.valueOf(LocalTime.now().getHour()) + ":" + String.valueOf(LocalTime.now().getMinute());
+    	LocalDate date = LocalDate.now();
+    	long id = new Random().nextInt((99 - 1) + 1) + 15;
+    	dailyAttend.setId(id);
+    	dailyAttend.setUserId(userId);
+    	dailyAttend.setStartTime(startTime);
+    	dailyAttend.setDate(date);
+    	dailyAttend.setUserName((userName));
+    	return dailyAttend;
     }
 }
