@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.kassem.finalproject.model.JobOffer;
 import com.kassem.finalproject.service.JobOfferService;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -63,14 +65,14 @@ public class ApplyNow extends VerticalLayout  {
 			JobOffer selectedPerson = e.getValue();
 			selectedPerson.copy(selectedPerson,offer);
 		});
-		Button back = new Button("Back");
+		/*Button back = new Button("Back");
 		back.setVisible(false);
-		back.addClickListener(e ->handleView(grid,getFormAfterSelection(offer)));
+		back.addClickListener(e ->getFormAfterSelection(offer));*/
 		grid.addItemClickListener(
-		        event -> view(grid,getFormAfterSelection(offer),back));
+		        event -> getFormAfterSelection(offer).open());
 		
 		
-		add(back);
+		//add(back);
 		
 	}
      public void view(Grid<JobOffer> grid ,FormLayout form,Button back ) {
@@ -79,7 +81,8 @@ public class ApplyNow extends VerticalLayout  {
     	 back.setVisible(true);
      }
      
-     public FormLayout getFormAfterSelection(JobOffer offer) {
+     public Dialog getFormAfterSelection(JobOffer offer) {
+    	HorizontalLayout horizontalLayout = new HorizontalLayout();
 		TextField jobTitle = new TextField("JobTitle");
 		jobTitle.setValue(offer.getJobTitle() != null ? offer.getJobTitle() :"" );
 		
@@ -112,12 +115,28 @@ public class ApplyNow extends VerticalLayout  {
 
 		TextField seniorityLevel = new TextField("Seniority Level");
 		seniorityLevel.setValue(offer.getSeniorityLevel() != null ? offer.getSeniorityLevel() : "");
-		Button applyBtn = new Button("Apply");
-	    return new FormLayout(companyName, jobTitle,location,education,experience,skills,employmentTypes,seniorityLevel,nbOfApplication,deadLine,description ,applyBtn);
+		Dialog dialog = new Dialog();
+		Button sendButton = new Button("Apply Now", event -> {
+		    dialog.close();
+		});
+		Button cancelButton = new Button("Cancel", event -> {
+		    dialog.close();
+		});
+		horizontalLayout.add(sendButton,cancelButton);
+		horizontalLayout.setAlignItems(Alignment.CENTER);
+		FormLayout form = new FormLayout(companyName, jobTitle,location,education,experience,skills,employmentTypes,seniorityLevel,nbOfApplication,deadLine,description,horizontalLayout );
+		dialog.add(form);
+		
+		//dialog.add(horizontalLayout);
+		dialog.setCloseOnEsc(false);
+		dialog.setCloseOnOutsideClick(false);
+		
+		return dialog;
      }
      
      public void handleView(Grid<JobOffer> grid , FormLayout form) {
     	 remove(form);
     	 add(grid);
      }
+     
 }
