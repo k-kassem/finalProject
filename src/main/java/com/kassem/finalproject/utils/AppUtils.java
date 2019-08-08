@@ -2,6 +2,7 @@ package com.kassem.finalproject.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,11 +19,15 @@ public class AppUtils {
 		
 	}
 	
-	public static List<String> getStringFromEnum(Enum[] roles){
+	public static List<String> getStringFromEnum(Enum<?>[] roles){
     	List<String> roleStr = new ArrayList<>();
-    	for(Enum role : roles) {
+    	for(Enum<?> role : roles) {
     		roleStr.add(role.toString());
     	}
     	return roleStr;
     }
+	public static String generateId() {
+		// replace '-' by '' to work properly with DB 
+		return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+	}
 }

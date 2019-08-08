@@ -6,6 +6,7 @@ import com.kassem.finalproject.model.DailyAttend;
 import com.kassem.finalproject.model.User;
 import com.kassem.finalproject.service.DailyAttendService;
 import com.kassem.finalproject.service.UserService;
+import com.kassem.finalproject.utils.AppUtils;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
@@ -22,6 +23,7 @@ import com.vaadin.flow.router.Route;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Random;
+import java.util.UUID;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,8 +83,8 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
         String password = passwordField.getValue();
         loginButton.setEnabled(false);
 		if (login(username, password)) {
-			DailyAttend dailyAttend = createDailyAttend();
-			dailyAttendService.saveDailyAttend(dailyAttend);
+			/*DailyAttend dailyAttend = createDailyAttend();
+			dailyAttendService.saveDailyAttend(dailyAttend);*/
 			loginButton.getUI().ifPresent(ui -> ui.navigate("secure"));
 		} else {
             logoutLabel.setVisible(true);
@@ -131,4 +133,5 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
     	dailyAttend.setUserName((userName));
     	return dailyAttend;
     }
+    
 }

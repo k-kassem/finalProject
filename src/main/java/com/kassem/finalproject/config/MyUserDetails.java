@@ -66,4 +66,12 @@ public class MyUserDetails implements UserDetails{
 	public Long getId() {
 		return user.getId();
 	}
+	
+	public String getFirstName(){
+		return user.getFirstName();
+	}
+	
+	public String getLastName(){
+		return user.getLastName();
+	}
 }
