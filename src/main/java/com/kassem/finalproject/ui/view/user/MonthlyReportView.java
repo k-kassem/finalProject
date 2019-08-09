@@ -33,21 +33,28 @@ public class MonthlyReportView extends VerticalLayout{
 	
 	@PostConstruct
 	public void initUi() {
-		Label l = new Label("Here is Monthly Report");
+		Label l = new Label();
+        l.getElement().getStyle().set("font-weight", "bold");
+        l.getElement().getStyle().set("font-size", "150%");
 		session = new SessionInfo();
 		PaginatedGrid<MonthlyAttend> grid = new PaginatedGrid<>();
 		if(session.getCurrentUser().getRole().equalsIgnoreCase(RoleValues.Admin.toString())){
 			monthlyAttends = monthlyAttendService.getAllRecord();
-			grid = getGlobalReportGrid(monthlyAttends,l,true); 
+			grid = getGlobalReportGrid(monthlyAttends,true); 
+			l.setText("Monthly Report");
 		}
 		else{
 			monthlyAttends = monthlyAttendService.getMonthlyAttendByUserId(Long.valueOf(session.getCurrentUser().getId()));
-			grid = getGlobalReportGrid(monthlyAttends,l,false); 
+			grid = getGlobalReportGrid(monthlyAttends,false); 
+			l.setText("Your Monthly Attendance");
 		}
-		add(grid,l);
+		Label leaveNote = new Label("Your remaining paid leaves balance (till year end) is " + String.valueOf(session.getCurrentUser().getNbOfLeave()));
+		leaveNote.getElement().getStyle().set("font-weight", "bold");
+		leaveNote.getElement().getStyle().set("font-size", "100%");
+		add(l,grid,leaveNote);
 	}
 	
-	private PaginatedGrid<MonthlyAttend> getGlobalReportGrid(List<MonthlyAttend> attend, Label l,Boolean showName) {
+	private PaginatedGrid<MonthlyAttend> getGlobalReportGrid(List<MonthlyAttend> attend,Boolean showName) {
 		PaginatedGrid<MonthlyAttend> grid = new PaginatedGrid<>();
 		grid.setPageSize(15);
 		grid.setPaginatorSize(5);

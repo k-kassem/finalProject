@@ -49,10 +49,15 @@ public class MenuBarView extends HorizontalLayout implements RouterLayout {
         menu.setSpacing(false);
         add(menu);
 
+        addMenuElement(SecureView.class, "Profile", VaadinIcon.HOME);
         if(session.getCurrentUser().getRole().equalsIgnoreCase("Admin")){
         	addMenuElement(UserView.class, "Users", VaadinIcon.USER);
         	addMenuElement(JobOfferView.class, "New Offer", VaadinIcon.NEWSPAPER);
         	addMenuElement(AttendanceView.class, "Show Attendance", VaadinIcon.ARCHIVE);
+        }
+        if(session.getCurrentUser().getRole().equalsIgnoreCase("Admin")){
+        //add leave
+        
         }
         addMenuElement(MonthlyReportView.class, "Monthly Report", VaadinIcon.RECORDS);
         buildCheckInOutBtn();

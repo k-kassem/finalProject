@@ -1,7 +1,6 @@
 package com.kassem.finalproject.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,10 +24,11 @@ public class User {
 	private String departement;
 	private Integer salary;
 	private LocalDate startDate;
-	
+	private String position;
+	private Double nbOfLeaves;
 	
 	public User(String username,String firstName,String lastName,String address, String password,String email,String role ,Integer age,String status,
-			String department,Integer salary,LocalDate startDate) {
+			String department,Integer salary,LocalDate startDate,String position,Double nbOfLeaves) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -38,6 +38,8 @@ public class User {
 		this.departement = department;
 		this.salary = salary;
 		this.startDate = startDate;
+		this.position = position;
+		this.nbOfLeaves = nbOfLeaves;
 	}
 	public User() {
 		
@@ -122,6 +124,20 @@ public class User {
 		this.address = address;
 	}
 
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+ 
+	public Double getNbOfLeaves() {
+		return nbOfLeaves;
+	}
+	public void setNbOfLeaves(Double nbOfLeaves) {
+		this.nbOfLeaves = nbOfLeaves;
+	}
+
 	public enum RoleValues{
 	    Admin {
 	        public String toString() {
@@ -176,7 +192,33 @@ public class User {
 		}
 	}
 	
-	
+	public enum Position{
+		IT_Employee{
+			public String toString() {
+	            return "IT Employee";
+	        }
+		},
+		Developer{
+			public String toString() {
+	            return "Developer";
+	        }
+		},
+		Telecom_Support{
+			public String toString() {
+	            return "Telecom Support";
+	        }
+		},
+		Team_Leader{
+			public String toString() {
+	            return "Team Leader";
+	        }
+		},
+		Manager{
+			public String toString() {
+	            return "Manager";
+	        }
+		}
+	}
 	
 
 }

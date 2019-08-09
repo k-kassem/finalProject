@@ -74,4 +74,7 @@ public class MyUserDetails implements UserDetails{
 	public String getLastName(){
 		return user.getLastName();
 	}
+	public Double getNbOfLeave(){
+		return user.getNbOfLeaves();
+	}
 }

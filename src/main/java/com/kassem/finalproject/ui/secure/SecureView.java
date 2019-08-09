@@ -45,6 +45,7 @@ public class SecureView extends VerticalLayout {
 	TextField departementTxt;
 	TextField salaryTxt;
 	TextField startDateTxt;
+	TextField positionTxt;
 	
 	@PostConstruct
 	public void init() {
@@ -93,8 +94,12 @@ public class SecureView extends VerticalLayout {
 		startDateTxt.setValue(user.getStartDate() != null ? user.getStartDate().toString() : "");
 		//startDateTxt.setEnabled(false);
 		
+		positionTxt = new TextField("Position");
+		positionTxt.setValue(user.getPosition() != null ? user.getPosition() :"" );
+		
+		
 		FormLayout formLayout = new FormLayout(userNameTxt,passwordTxt,firstNameTxt,lastNameTxt,addressTxt,emailTxt,ageTxt,
-				statusCbx,departementTxt,salaryTxt,startDateTxt);
+				statusCbx,departementTxt,positionTxt,salaryTxt,startDateTxt);
 		String firstName = firstNameTxt.getValue();
 		String lastName = lastNameTxt.getValue();
 		String password = passwordTxt.getValue();

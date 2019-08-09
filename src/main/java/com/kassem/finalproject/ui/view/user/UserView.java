@@ -11,6 +11,7 @@ import org.vaadin.haijian.Exporter;
 import com.kassem.finalproject.dataprovider.UserDataProvider;
 import com.kassem.finalproject.model.User;
 import com.kassem.finalproject.model.User.Departement;
+import com.kassem.finalproject.model.User.Position;
 import com.kassem.finalproject.model.User.RoleValues;
 import com.kassem.finalproject.model.User.Status;
 import com.kassem.finalproject.service.UserService;
@@ -32,6 +33,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -81,7 +83,10 @@ public class UserView extends VerticalLayout {
         TextField salaryField = new TextField("Salary");
         
         DatePicker datePicker = new DatePicker("Start Date"); 
-        FormLayout form = new FormLayout(userName,firstName,lastName,address, password,emailField,ageField,roleCbx,statusCbx,deptCbx,salaryField,datePicker);
+        ComboBox<String> positionCbx = new ComboBox<String>("Position");
+        positionCbx.setItems(AppUtils.getStringFromEnum(Position.values()));
+        TextField leavesField = new TextField("Leaves");
+        FormLayout form = new FormLayout(userName,firstName,lastName,address, password,emailField,ageField,roleCbx,statusCbx,deptCbx,positionCbx,leavesField,salaryField,datePicker);
 
        
         Binder<User> binder = new Binder<User>(User.class);
@@ -108,6 +113,12 @@ public class UserView extends VerticalLayout {
         .bind(User::getSalary, User::setSalary);
         binder.bind(datePicker, User::getStartDate, User::setStartDate);
         
+        binder.bind(positionCbx, User::getPosition, User::setPosition);
+        
+        binder.forField(leavesField)
+        .withConverter(
+                new StringToDoubleConverter("Must enter a number"))
+        .bind(User::getNbOfLeaves, User::setNbOfLeaves);
         return new BinderCrudEditor<>(binder, form);
     }
     
