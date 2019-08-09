@@ -8,16 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.haijian.Exporter;
 
 import com.kassem.finalproject.dataprovider.JobOfferDataProvider;
-import com.kassem.finalproject.dataprovider.UserDataProvider;
 import com.kassem.finalproject.model.JobOffer;
-import com.kassem.finalproject.model.User;
 import com.kassem.finalproject.model.JobOffer.EmploymentTypes;
 import com.kassem.finalproject.model.JobOffer.SeniorityLevel;
-import com.kassem.finalproject.model.User.Departement;
-import com.kassem.finalproject.model.User.RoleValues;
-import com.kassem.finalproject.model.User.Status;
 import com.kassem.finalproject.service.JobOfferService;
-import com.kassem.finalproject.service.UserService;
 import com.kassem.finalproject.ui.secure.MenuBarView;
 import com.kassem.finalproject.utils.AppUtils;
 import com.vaadin.flow.component.button.Button;
@@ -29,12 +23,10 @@ import com.vaadin.flow.component.crud.CrudVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
@@ -47,6 +39,10 @@ import com.vaadin.flow.server.StreamResource;
 @PageTitle("Job Offer")
 public class JobOfferView extends VerticalLayout{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	JobOfferService jobOfferService;
 	@PostConstruct

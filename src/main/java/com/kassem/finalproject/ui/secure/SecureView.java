@@ -23,6 +23,11 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Home Page")
 public class SecureView extends VerticalLayout {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Autowired 
 	UserService userService;
 	

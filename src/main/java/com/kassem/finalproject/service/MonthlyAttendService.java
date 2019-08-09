@@ -1,5 +1,8 @@
 package com.kassem.finalproject.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +17,19 @@ public class MonthlyAttendService {
 	
 	public void saveRecord(MonthlyAttend monthlyAttend){
 		monthlyAttendRepository.save(monthlyAttend);
+	}
+	public List<MonthlyAttend> getAllRecord(){
+		List<MonthlyAttend> result = new ArrayList<>();
+		monthlyAttendRepository.findAll().forEach(rec -> result.add(rec));
+		return result;
+	}
+	public List<MonthlyAttend> getMonthlyAttendByUserId(Long id){
+		List<MonthlyAttend> result = new ArrayList<>();
+		monthlyAttendRepository.findAll().forEach(rec -> {
+			if(rec.getUserId().equals(String.valueOf(id))){
+				result.add(rec);
+			}
+		});
+		return result;
 	}
 }

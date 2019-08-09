@@ -1,6 +1,5 @@
 package com.kassem.finalproject.ui.view.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,10 +14,9 @@ import com.kassem.finalproject.service.UserService;
 import com.kassem.finalproject.ui.secure.MenuBarView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.GridContextMenu;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -30,6 +28,10 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Daily Attendance")
 public class AttendanceView extends VerticalLayout{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	DailyAttendService attendService;
 	@Autowired
@@ -80,11 +82,11 @@ public class AttendanceView extends VerticalLayout{
 		lastNametxt.setValue(user.getLastName());
 		
 		TextField emailtxt = new TextField("Email");
-		lastNametxt.setValue(user.getEmail());
-		
-		dialog.add(nametxt);
-		dialog.add(lastNametxt);
-		dialog.add(emailtxt);
+		emailtxt.setValue(user.getEmail());
+		FormLayout form = new FormLayout(nametxt,lastNametxt,emailtxt);
+		dialog.add(form);
+		/*dialog.add(lastNametxt);
+		dialog.add(emailtxt);*/
 		dialog.setCloseOnEsc(true);
 		dialog.setCloseOnOutsideClick(true);
 		

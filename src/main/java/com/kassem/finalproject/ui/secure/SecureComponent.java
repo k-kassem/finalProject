@@ -1,18 +1,16 @@
 package com.kassem.finalproject.ui.secure;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.kassem.finalproject.model.User;
 import com.kassem.finalproject.service.UserService;
 import com.kassem.finalproject.ui.login.SessionInfo;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.RoutePrefix;
 import com.vaadin.flow.router.RouterLayout;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 @RoutePrefix("secure")
 public class SecureComponent extends VerticalLayout implements RouterLayout {

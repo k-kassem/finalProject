@@ -12,10 +12,9 @@ import com.kassem.finalproject.service.DailyAttendService;
 import com.kassem.finalproject.service.MonthlyAttendService;
 import com.kassem.finalproject.ui.joboffer.JobOfferView;
 import com.kassem.finalproject.ui.login.SessionInfo;
-import com.kassem.finalproject.ui.view.category.CategoryView;
 import com.kassem.finalproject.ui.view.user.AttendanceView;
+import com.kassem.finalproject.ui.view.user.MonthlyReportView;
 import com.kassem.finalproject.ui.view.user.UserView;
-import com.kassem.finalproject.utils.AppUtils;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -25,7 +24,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.ParentLayout;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 
 @ParentLayout(SecureComponent.class)
@@ -56,6 +54,7 @@ public class MenuBarView extends HorizontalLayout implements RouterLayout {
         	addMenuElement(JobOfferView.class, "New Offer", VaadinIcon.NEWSPAPER);
         	addMenuElement(AttendanceView.class, "Show Attendance", VaadinIcon.ARCHIVE);
         }
+        addMenuElement(MonthlyReportView.class, "Monthly Report", VaadinIcon.RECORDS);
         buildCheckInOutBtn();
        // addMenuElement(SecureView.class, "Secure", VaadinIcon.LOCK);
         //addMenuElement(CategoryView.class, "Categories", VaadinIcon.CAR);

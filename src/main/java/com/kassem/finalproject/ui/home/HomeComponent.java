@@ -10,7 +10,12 @@ import com.vaadin.flow.router.RouterLink;
 @Route("")
 public class HomeComponent extends VerticalLayout {
 
-    public HomeComponent() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public HomeComponent() {
         Label greeting = new Label("Our Home page(view should be added )");
         add(greeting);
         add(new RouterLink("Login", LoginComponent.class));
