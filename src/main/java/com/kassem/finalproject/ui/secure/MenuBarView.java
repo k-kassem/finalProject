@@ -13,6 +13,7 @@ import com.kassem.finalproject.service.MonthlyAttendService;
 import com.kassem.finalproject.ui.joboffer.JobOfferView;
 import com.kassem.finalproject.ui.login.SessionInfo;
 import com.kassem.finalproject.ui.view.user.AttendanceView;
+import com.kassem.finalproject.ui.view.user.LeaveRequestView;
 import com.kassem.finalproject.ui.view.user.MonthlyReportView;
 import com.kassem.finalproject.ui.view.user.UserView;
 import com.vaadin.flow.component.AttachEvent;
@@ -55,8 +56,9 @@ public class MenuBarView extends HorizontalLayout implements RouterLayout {
         	addMenuElement(JobOfferView.class, "New Offer", VaadinIcon.NEWSPAPER);
         	addMenuElement(AttendanceView.class, "Show Attendance", VaadinIcon.ARCHIVE);
         }
+        addMenuElement(LeaveRequestView.class, "Leave Permission", VaadinIcon.OUT);
         if(session.getCurrentUser().getRole().equalsIgnoreCase("Admin")){
-        //add leave
+        //add All Leave leave permission 
         
         }
         addMenuElement(MonthlyReportView.class, "Monthly Report", VaadinIcon.RECORDS);
