@@ -24,4 +24,7 @@ public class LeaveRequestService {
 		leaveRequestRepository.findAll().forEach(res -> result.add(res));
 		return result;
 	}
+	public void delete (LeaveRequest leaveRequest){
+		leaveRequestRepository.delete(leaveRequest);
+	}
 }

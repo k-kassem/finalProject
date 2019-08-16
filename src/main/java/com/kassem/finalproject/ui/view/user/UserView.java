@@ -1,13 +1,18 @@
 package com.kassem.finalproject.ui.view.user;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.haijian.Exporter;
 
+import com.helger.commons.csv.CSVWriter;
 import com.kassem.finalproject.dataprovider.UserDataProvider;
 import com.kassem.finalproject.model.User;
 import com.kassem.finalproject.model.User.Departement;
@@ -139,7 +144,7 @@ public class UserView extends VerticalLayout {
     	newItemButton.getElement().setAttribute("new-button", true);
 
     	Crud<User> crud = new Crud<>(User.class, createPersonEditor());
-    	Anchor anchor = new Anchor(new StreamResource("my-excel.xlsx", Exporter.exportAsExcel(crud.getGrid())), "Download As Excel");
+    	Anchor anchor = new Anchor(new StreamResource("my-excel.xlsx", this::getInputStream), "Download As Excel");
     	
     	crud.setToolbar(footer,anchor, newItemButton);
         crud.getGrid().removeColumnByKey("id");
@@ -148,5 +153,20 @@ public class UserView extends VerticalLayout {
         crud.addSaveListener(e -> userService.save(e.getItem()));
         crud.addDeleteListener(e -> deleteUser(e.getItem(),crud,userDataProvider));
         return crud;
+    }
+    private InputStream getInputStream() {
+        try {
+            StringWriter stringWriter = new StringWriter();
+
+            CSVWriter csvWriter = new CSVWriter(stringWriter);
+            csvWriter.writeNext("id", "name");
+            userService.getAllUser().forEach(c -> csvWriter.writeNext("" + c.getId(), c.getLastName()));
+            csvWriter.close();
+            return IOUtils.toInputStream(stringWriter.toString(), "UTF-8");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

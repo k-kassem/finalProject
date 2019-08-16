@@ -135,5 +135,18 @@ public class LeaveRequest {
 	        }
 		},
 	}
+	public LeaveRequest copy(LeaveRequest leave , LeaveRequest newLeave){
+		newLeave.setId(leave.getId());
+		newLeave.setAddressDuringLeave(leave.getAddressDuringLeave());
+		newLeave.setDepartement(leave.getDepartement());
+		newLeave.setEndDate(leave.getEndDate());
+		newLeave.setLeaveType(leave.getLeaveType());
+		newLeave.setNbOfDays(leave.getNbOfDays());
+		newLeave.setStartDate(leave.getStartDate());
+		newLeave.setUserid(leave.getUserid());
+		newLeave.setUserLastName(leave.getUserLastName());
+		newLeave.setUserName(leave.getUserName());
+		return newLeave;
+	}
 	
 }
