@@ -100,20 +100,20 @@ public class SecureView extends VerticalLayout {
 		
 		FormLayout formLayout = new FormLayout(userNameTxt,passwordTxt,firstNameTxt,lastNameTxt,addressTxt,emailTxt,ageTxt,
 				statusCbx,departementTxt,positionTxt,salaryTxt,startDateTxt);
+		
+		Button editBtn = new Button("Edit");
+		editBtn.addClickListener(e -> edit(user.getId(),firstNameTxt,lastNameTxt,emailTxt,addressTxt,passwordTxt,statusCbx));
+		layout.add(loginLabel,formLayout,editBtn);
+		add(layout);
+	}
+	
+	public void edit(Long Id,TextField firstNameTxt,TextField lastNameTxt,TextField emailTxt,TextArea addressTxt,TextField passwordTxt,ComboBox<String> statusCbx) {
 		String firstName = firstNameTxt.getValue();
 		String lastName = lastNameTxt.getValue();
 		String password = passwordTxt.getValue();
 		String email = emailTxt.getValue();
 		String address = addressTxt.getValue();
 		String status = statusCbx.getValue();
-		Button editBtn = new Button("Edit");
-		editBtn.addClickListener(e -> edit(user.getId(),firstName,lastName,email,address,password,status));
-		layout.add(loginLabel,formLayout,editBtn);
-		add(layout);
-	}
-	
-	public void edit(Long Id,String firstName,String lastName,String email,String address,String password,String status) {
-		
 		String message = userService.updateUser(Id,firstName,lastName,email,address,password,status);
 		Label afterEdit = new Label(message);
 		add(afterEdit);

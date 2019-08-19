@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS message (
 	from_user_id VARCHAR(255) ,
 	title VARCHAR(255) ,
 	context VARCHAR(255),
+	to_user_name VARCHAR(255),
     PRIMARY KEY (id) 
 )  ENGINE=INNODB;

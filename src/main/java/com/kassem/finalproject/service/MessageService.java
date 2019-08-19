@@ -28,4 +28,8 @@ public class MessageService {
 		});
 		return result;
 	}
+	
+	public void deleteMessage(Message message) {
+		messageRepository.delete(message);
+	}
 }

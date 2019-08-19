@@ -105,8 +105,10 @@ public class LeavesView extends VerticalLayout{
 	private void sendMessage(LeaveRequest leaveRequest,String title,String context){
 		Message message = new Message();
 		User user = userService.getUserById(Long.valueOf(leaveRequest.getUserid()));
+		User fromUser = userService.getUserById(Long.valueOf(session.getCurrentUser().getId()));
 		message.setId(Long.valueOf( new Random().nextInt(1000000 + 1)));
 		message.setFromUserId(String.valueOf(session.getCurrentUser().getId()));
+		message.setFromUserName(fromUser.getFirstName() + " " + fromUser.getLastName());
 		message.setToUserId(leaveRequest.getUserid());
 		message.setTitle(title);
 		message.setContext(context);

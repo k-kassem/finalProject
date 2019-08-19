@@ -1,6 +1,8 @@
 package com.kassem.finalproject.ui.view.user;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
@@ -8,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.klaudeta.PaginatedGrid;
 
 import com.kassem.finalproject.model.DailyAttend;
+import com.kassem.finalproject.model.Message;
 import com.kassem.finalproject.model.User;
 import com.kassem.finalproject.service.DailyAttendService;
+import com.kassem.finalproject.service.MessageService;
 import com.kassem.finalproject.service.UserService;
+import com.kassem.finalproject.ui.login.SessionInfo;
 import com.kassem.finalproject.ui.secure.MenuBarView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -33,14 +38,21 @@ public class AttendanceView extends VerticalLayout{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Autowired
-	DailyAttendService attendService;
+	private DailyAttendService attendService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	@Autowired
+	private MessageService messageService;
+	
+	private SessionInfo session;
 	
 	List<DailyAttend> attendance;
 
+	TextField titletxt = new TextField("Title");
+	TextArea messageTxt = new TextArea("Message");
 	@PostConstruct
 	public void initUi() {
+		session = new SessionInfo();
 		attendance = attendService.getAllattended();
 		Label l = new Label();
 		PaginatedGrid<DailyAttend> grid = getGrid(attendance, l);
@@ -115,18 +127,18 @@ public class AttendanceView extends VerticalLayout{
 	}
 	private Dialog getMessageDialog(DailyAttend attend, Label l){
 		VerticalLayout layout = new VerticalLayout();
-		User user = userService.getUserById(Long.valueOf(attend.getUserId()));
+		User toUser = userService.getUserById(Long.valueOf(attend.getUserId()));
+		User fromUser = userService.getUserById(Long.valueOf(session.getCurrentUser().getId()));
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		
 		Dialog dialog = new Dialog();
-		TextField nametxt = new TextField("Name");
-		nametxt.setValue(user.getFirstName());
-		TextArea message = new TextArea("Message");
-		message.setValue(user.getLastName());
-		layout.add(nametxt,message);
+		//String title = titletxt.getValue();
+		//String message = messageTxt.getValue();
+		layout.add(titletxt,messageTxt);
 		dialog.add(layout);
+		
 		Button sendButton = new Button("Confirm", event -> {
-			l.setText(message.getValue());
+			sendMessage(fromUser,toUser,titletxt,messageTxt);
 		    dialog.close();
 		});
 		Button cancelButton = new Button("Cancel", event -> {
@@ -139,5 +151,16 @@ public class AttendanceView extends VerticalLayout{
 		dialog.setCloseOnOutsideClick(false);
 		
 		return dialog;
+	}
+	private void sendMessage(User fromUser,User toUser,TextField title,TextArea  context) {
+		Message message = new Message();
+		message.setId(Long.valueOf( new Random().nextInt(1000000 + 1)));
+		message.setFromUserId(String.valueOf(fromUser.getId()));
+		message.setFromUserName(fromUser.getFirstName() + " " + fromUser.getLastName());
+		message.setToUserId(String.valueOf(toUser.getId()));
+		message.setTitle(title.getValue());
+		message.setContext(context.getValue());
+		message.setSentDate(LocalDate.now());
+		messageService.saveMessage(message);
 	}
 }

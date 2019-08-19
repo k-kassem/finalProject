@@ -11,22 +11,24 @@ public class Message {
 	@Id
 	private Long id;
 	private String toUserId;
+	private String fromUserName;
 	private String fromUserId;
-	private String Context;
+	private String context;
 	private String title;
 	private LocalDate sentDate;
 	public Message() {
 		
 	}
 	
-	public Message(Long id, String toUserId, String fromUserId, String context, String title,LocalDate sentDate) {
+	public Message(Long id, String toUserId, String fromUserId, String context, String title,LocalDate sentDate,String fromUserName) {
 		super();
 		this.id = id;
 		this.toUserId = toUserId;
 		this.fromUserId = fromUserId;
-		Context = context;
+		this.context = context;
 		this.title = title;
 		this.sentDate = sentDate;
+		this.fromUserName = fromUserName;
 	}
 	
 	public Long getId() {
@@ -48,10 +50,10 @@ public class Message {
 		this.fromUserId = fromUserId;
 	}
 	public String getContext() {
-		return Context;
+		return context;
 	}
 	public void setContext(String context) {
-		Context = context;
+		this.context = context;
 	}
 	public String getTitle() {
 		return title;
@@ -67,6 +69,22 @@ public class Message {
 	public void setSentDate(LocalDate sentDate) {
 		this.sentDate = sentDate;
 	}
-	
-	
+
+	public String getFromUserName() {
+		return fromUserName;
+	}
+
+	public void setFromUserName(String toUserName) {
+		this.fromUserName = toUserName;
+	}
+	public Message copy(Message message,Message newMessage) {
+		newMessage.setContext(message.getContext());
+		newMessage.setFromUserId(message.getFromUserId());
+		newMessage.setFromUserName(message.getFromUserName());
+		newMessage.setId(message.getId());
+		newMessage.setTitle(message.getTitle());
+		newMessage.setToUserId(message.getToUserId());
+		newMessage.setSentDate(message.getSentDate());
+		return newMessage;
+	}
 }
