@@ -1,8 +1,22 @@
 package com.kassem.finalproject.ui.view.user;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +26,7 @@ import com.kassem.finalproject.model.Applicant.Degrees;
 import com.kassem.finalproject.model.JobOffer;
 import com.kassem.finalproject.service.ApplicantService;
 import com.kassem.finalproject.service.JobOfferService;
+import com.kassem.finalproject.ui.login.SessionInfo;
 import com.kassem.finalproject.ui.secure.MenuBarView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -37,6 +52,7 @@ public class ApplicantsView extends VerticalLayout{
 	private JobOfferService jobOfferService;
 	@Autowired
 	private ApplicantService applicantService;
+	SessionInfo session;
 	private Applicant selectedPerson = null;
 	/**
 	 * 
@@ -45,7 +61,7 @@ public class ApplicantsView extends VerticalLayout{
 
 	@PostConstruct
 	public void initUi() {
-		
+		session = new SessionInfo();
 		List<JobOffer> personList = jobOfferService.getAllOffer();
 		Grid<JobOffer> grid = new Grid<>();
 		grid.setItems(personList);
@@ -164,11 +180,62 @@ public class ApplicantsView extends VerticalLayout{
     	 expEndDate.setValue(applicant.getExpEndDate());
     	 FormLayout experienceLayout = new FormLayout(nbOfYear,company,role,comment,expStartDate,expEndDate);
     	 
-    	 ComboBox<ConnectionWay> connectionWayCbx = new ComboBox<>("Connecting Way");
+    	 TextField connectionWayCbx = new TextField("Connecting Way");
+    	 connectionWayCbx.setValue(applicant.getConnectingWay());
 		Button sendButton = new Button("Approve", event -> {
+			String title = "Update about you application";
+			String message = "Hello "+firstName.getValue()+"\n" + 
+					"\n" + 
+					"Thank you for your interest to join Our company \n" + 
+					"\n" + 
+					"We have carefully reviewed your CV, and have decided  to proceed with your application. Our decision was based upon comparing your experience with the requirements of the position and the profile of the rest of the team. \n" + 
+					"\n" + 
+					"Kindly note that the interview is confirmed for Thursday August 29, at 1:00 PM" +"\n"+ 
+					"\n" + 
+					"Thank you again for your interest in Our Company.\n" + 
+					"\n" +"\n"+ 
+					"Kind regards,\n" + "\n"+
+					session.getCurrentUser().getFirstName();;
+			try {
+				sendEmail(title,message);
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			dialog.close();
 		});
 		Button cancelButton = new Button("Reject", event -> {
+			String title = "Update about you application";
+			String message = "Hello "+firstName.getValue()+"\n" + 
+					"\n" + 
+					"Thank you for your interest to join Our company \n" + 
+					"\n" + 
+					"We have carefully reviewed your CV, and unfortunately have decided not to proceed with your application. Our decision was based upon comparing your experience with the requirements of the position and the profile of the rest of the team. \n" + 
+					"\n" + 
+					"our company is growing, we're constantly opening new roles. Please keep track of all new openings via our Careers Page \n" + 
+					"\n" + 
+					"Thank you again for your interest in Our Company.\n" + 
+					"\n" +"\n"+ 
+					"Kind regards,\n" + "\n"+
+					session.getCurrentUser().getFirstName();
+			try {
+				sendEmail(title,message);
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			dialog.close();
 		});
 		horizontalLayout.add(sendButton, cancelButton);
@@ -176,5 +243,33 @@ public class ApplicantsView extends VerticalLayout{
 		FormLayout form = new FormLayout(personalInfoLayout,educationLayout,experienceLayout,connectionWayCbx,horizontalLayout);
 		dialog.add(form);
 		return dialog;
+	}
+	private void sendEmail(String Title ,String message) throws AddressException, MessagingException, IOException{
+		Properties props = new Properties();
+		   props.put("mail.smtp.auth", "true");
+		   props.put("mail.smtp.starttls.enable", "true");
+		   props.put("mail.smtp.host", "smtp.gmail.com");
+		   props.put("mail.smtp.port", "587");
+		   
+		   Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+		      protected PasswordAuthentication getPasswordAuthentication() {
+		         return new PasswordAuthentication("kkassem1432@gmail.com", "sa43m5890");
+		      }
+		   });
+		   Message msg = new MimeMessage(session);
+		   msg.setFrom(new InternetAddress("kkassem1432@gmail.com", false));
+
+		   msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("khalil_k97@hotmail.com"));
+		   msg.setSubject(Title);
+		   msg.setContent(message, "text/html");
+		   msg.setSentDate(new Date());
+
+		   MimeBodyPart messageBodyPart = new MimeBodyPart();
+		   messageBodyPart.setContent(message, "text/html");
+
+		   Multipart multipart = new MimeMultipart();
+		   multipart.addBodyPart(messageBodyPart);
+		   msg.setContent(multipart);
+		   Transport.send(msg);   
 	}
 }

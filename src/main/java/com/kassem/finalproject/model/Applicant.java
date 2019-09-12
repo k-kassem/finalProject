@@ -270,4 +270,9 @@ public class Applicant {
 	        }
 		}
 	}
+	public Applicant copy(Applicant applicant,Applicant newApplicant) {
+		
+		newApplicant.setFirstName(applicant.getFirstName());
+		return newApplicant;
+	}
 }

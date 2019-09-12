@@ -18,6 +18,7 @@ import com.kassem.finalproject.ui.view.user.LeaveRequestView;
 import com.kassem.finalproject.ui.view.user.LeavesView;
 import com.kassem.finalproject.ui.view.user.MessageView;
 import com.kassem.finalproject.ui.view.user.MonthlyReportView;
+import com.kassem.finalproject.ui.view.user.OfficialLeaveView;
 import com.kassem.finalproject.ui.view.user.UserView;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
@@ -66,6 +67,7 @@ public class MenuBarView extends HorizontalLayout implements RouterLayout {
         	addMenuElement(MessageView.class, "Message", VaadinIcon.COMMENTS);
         }
         addMenuElement(MonthlyReportView.class, "Monthly Report", VaadinIcon.RECORDS);
+        addMenuElement(OfficialLeaveView.class, "Official Leave", VaadinIcon.ARROW_FORWARD);
         buildCheckInOutBtn();
        // addMenuElement(SecureView.class, "Secure", VaadinIcon.LOCK);
         //addMenuElement(CategoryView.class, "Categories", VaadinIcon.CAR);
