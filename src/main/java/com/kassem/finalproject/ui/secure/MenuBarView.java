@@ -24,6 +24,7 @@ import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -47,11 +48,16 @@ public class MenuBarView extends HorizontalLayout implements RouterLayout {
 
 	private SessionInfo session;
     public MenuBarView() {
+    	Image img = new Image("images/test3.jpg","test");
+        img.setWidth("100px");
+        img.setHeight("100px");
     	session = new SessionInfo();
         setSizeFull();
         menu = new VerticalLayout();
         menu.setSizeUndefined();
         menu.setSpacing(false);
+        menu.setAlignItems(Alignment.CENTER);
+        menu.add(img);
         add(menu);
 
         addMenuElement(SecureView.class, "Profile", VaadinIcon.HOME);

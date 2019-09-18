@@ -9,9 +9,12 @@ import com.kassem.finalproject.service.UserService;
 import com.kassem.finalproject.utils.AppUtils;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
+import com.vaadin.flow.component.orderedlayout.BoxSizing;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -54,6 +57,10 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
     public LoginComponent() {
         setAlignItems(Alignment.CENTER);
 
+        Image img = new Image("images/test3.jpg","test");
+        img.setWidth("350px");
+        img.setHeight("200px");
+        add(img);
         logoutLabel = new Label();
         logoutLabel.getElement().getStyle().set("color", "red");
         logoutLabel.setVisible(false);
@@ -75,7 +82,13 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
             loginAction();
         });
 
-        add(usernameField, passwordField, loginButton);
+        VerticalLayout layout = new VerticalLayout(usernameField, passwordField, loginButton);
+        Image img1 = new Image("images/test2.jpg","test");
+        img1.setWidth("700px");
+        img1.setHeight("350px");
+        HorizontalLayout hlayout = new HorizontalLayout(/*img1,*/layout);
+        hlayout.setBoxSizing(BoxSizing.BORDER_BOX);
+        add(hlayout);
     }
 
     private void loginAction() {
