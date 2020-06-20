@@ -35,9 +35,11 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.selection.SingleSelect;
@@ -61,6 +63,11 @@ public class ApplicantsView extends VerticalLayout{
 
 	@PostConstruct
 	public void initUi() {
+		//getStyle().set("background-color", "blue");
+		 Label label = new Label("Applications");
+		 label.getElement().getStyle().set("font-weight", "bold");
+		 label.getElement().getStyle().set("font-size", "150%");
+		setAlignItems(Alignment.CENTER);
 		session = new SessionInfo();
 		List<JobOffer> personList = jobOfferService.getAllOffer();
 		Grid<JobOffer> grid = new Grid<>();
@@ -72,6 +79,7 @@ public class ApplicantsView extends VerticalLayout{
 				GridVariant.LUMO_ROW_STRIPES);
 		grid.setSelectionMode(SelectionMode.SINGLE);
 
+		add(label);
 		add(grid);
 		SingleSelect<Grid<JobOffer>, JobOffer> offerSelected = grid.asSingleSelect();
 		// personSelect can now be used with Binder or HasValue interface
@@ -90,6 +98,9 @@ public class ApplicantsView extends VerticalLayout{
 		//add(back);
 	}
 	 public Dialog getApplicantsByOfferDialog(JobOffer offer) {
+		 Label label = new Label("Applicants");
+		 label.getElement().getStyle().set("font-weight", "bold");
+		 label.getElement().getStyle().set("font-size", "150%");
 		 List<Applicant> applicantList = applicantService.getApplicantByOfferId(offer.getId());
 			Grid<Applicant> grid = new Grid<>();
 			grid.setItems(applicantList);
@@ -110,10 +121,12 @@ public class ApplicantsView extends VerticalLayout{
 			grid.addItemClickListener(
 			        event -> getApplicantDialog(selectedPerson).open());
 			Dialog dialog = new Dialog();
-			VerticalLayout l = new VerticalLayout(grid);
+			VerticalLayout l = new VerticalLayout(label,grid);
 			l.setSizeFull();
+			l.setAlignItems(Alignment.CENTER);
+			//dialog.add(label);
 			dialog.add(l);
-			
+			dialog.setWidth("1000px");
 			//dialog.add(horizontalLayout);
 			//dialog.setCloseOnEsc(false);
 			//dialog.setCloseOnOutsideClick(false);

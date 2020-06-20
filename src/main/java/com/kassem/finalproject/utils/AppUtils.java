@@ -1,14 +1,20 @@
 package com.kassem.finalproject.utils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.kassem.finalproject.service.UserService;
+
 public class AppUtils {
 
-	
+	@Autowired
+	UserService userService;
 	public static boolean validateEmail(String email) {
 		String emailPattern = 
 				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -29,5 +35,16 @@ public class AppUtils {
 	public static String generateId() {
 		// replace '-' by '' to work properly with DB 
 		return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+	}
+	
+	public static boolean validDate(LocalDate now , LocalDate date2) {
+		if(now.compareTo(date2)>0)
+			return false;
+		return true;
+	}
+	public  boolean isUserExist(String userName) {
+		if(userService.getUserByUsername(userName) != null)
+			return true;
+		return false;
 	}
 }

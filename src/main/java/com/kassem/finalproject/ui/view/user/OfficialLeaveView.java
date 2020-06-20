@@ -19,6 +19,7 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -44,6 +45,10 @@ public class OfficialLeaveView extends VerticalLayout{
 	
 	@PostConstruct
 	public void init() {
+		setAlignItems(Alignment.CENTER);
+		Label label = new Label("Official Leaves");
+		 label.getElement().getStyle().set("font-weight", "bold");
+		 label.getElement().getStyle().set("font-size", "150%");
 		sessionInfo = new SessionInfo();
 		//add(new Label("here is Official View"));
 		
@@ -57,6 +62,7 @@ public class OfficialLeaveView extends VerticalLayout{
 				GridVariant.LUMO_ROW_STRIPES);
 		grid.setSelectionMode(SelectionMode.SINGLE);
 
+		add(label);
 		add(grid);
 		SingleSelect<Grid<OfficialLeave>, OfficialLeave> leaveSelected = grid.asSingleSelect();
 		// personSelect can now be used with Binder or HasValue interface
@@ -106,7 +112,11 @@ public class OfficialLeaveView extends VerticalLayout{
 				dialog.close();
 				});
 			HorizontalLayout btns = new HorizontalLayout(saveBtn,deleteBtn);
-			VerticalLayout l = new VerticalLayout(formLayout);
+			Label label = new Label(leave.getOccasion());
+			 label.getElement().getStyle().set("font-weight", "bold");
+			 label.getElement().getStyle().set("font-size", "150%");
+			VerticalLayout l = new VerticalLayout(label,formLayout);
+			l.setAlignItems(Alignment.CENTER);
 			if(session.getCurrentUser().getRole().equalsIgnoreCase("Admin"))
 				l.add(btns);
 			l.setSizeFull();

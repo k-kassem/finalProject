@@ -26,6 +26,7 @@ public class UserService {
 		return "Todo";
 	}
 	public void save(User user) {
+		user.setFirstLogin(1);
 		userRepository.save(user);
 	}
 	public void delete(User user) {

@@ -67,7 +67,7 @@ public class UserView extends VerticalLayout {
 
 	private CrudEditor<User> createPersonEditor() {
         
-		TextField userName = new TextField("User Name");
+		TextField userNameField = new TextField("User Name");
 		TextField firstName = new TextField("First Name");
 		TextField lastName = new TextField("Last Name");
 		TextField address = new TextField("Address");
@@ -91,11 +91,14 @@ public class UserView extends VerticalLayout {
         ComboBox<String> positionCbx = new ComboBox<String>("Position");
         positionCbx.setItems(AppUtils.getStringFromEnum(Position.values()));
         TextField leavesField = new TextField("Leaves");
-        FormLayout form = new FormLayout(userName,firstName,lastName,address, password,emailField,ageField,roleCbx,statusCbx,deptCbx,positionCbx,leavesField,salaryField,datePicker);
+        FormLayout form = new FormLayout(userNameField,firstName,lastName,address, password,emailField,ageField,roleCbx,statusCbx,deptCbx,positionCbx,leavesField,salaryField,datePicker);
 
        
         Binder<User> binder = new Binder<User>(User.class);
-        binder.bind(userName,User::getUsername ,User::setUserName);
+       // binder.bind(userName,User::getUsername ,User::setUserName);
+        binder.forField(userNameField)
+		.withValidator(userName -> isUserExist(userName), "User Already Exist")
+		.bind(User::getUsername, User::setUserName);
         binder.bind(firstName,User::getFirstName ,User::setFirstName);
         binder.bind(lastName,User::getLastName ,User::setLastName);
         binder.bind(address,User::getAddress ,User::setAddress);
@@ -169,4 +172,9 @@ public class UserView extends VerticalLayout {
             return null;
         }
     }
+    public  boolean isUserExist(String userName) {
+		if(userService.getUserByUsername(userName) != null)
+			return false;
+		return true;
+	}
 }

@@ -11,6 +11,7 @@ import com.kassem.finalproject.ui.login.SessionInfo;
 import com.kassem.finalproject.utils.AppUtils;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -115,7 +116,8 @@ public class SecureView extends VerticalLayout {
 		String address = addressTxt.getValue();
 		String status = statusCbx.getValue();
 		String message = userService.updateUser(Id,firstName,lastName,email,address,password,status);
-		Label afterEdit = new Label(message);
-		add(afterEdit);
+		Dialog d = new Dialog(new Label(message));
+		d.open();
+		d.open();
 	}
 }

@@ -95,10 +95,14 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
         String username = usernameField.getValue();
         String password = passwordField.getValue();
         loginButton.setEnabled(false);
-		if (login(username, password)) {
+		if (login(username, password) ) {
 			/*DailyAttend dailyAttend = createDailyAttend();
 			dailyAttendService.saveDailyAttend(dailyAttend);*/
-			loginButton.getUI().ifPresent(ui -> ui.navigate("secure"));
+			if(userService.getUserByUsername(username).getFirstLogin() == 0)
+				loginButton.getUI().ifPresent(ui -> ui.navigate("secure"));
+			else {
+				loginButton.getUI().ifPresent(ui -> ui.navigate("changepassword"));
+			}
 		} else {
             logoutLabel.setVisible(true);
             loginButton.setEnabled(true);

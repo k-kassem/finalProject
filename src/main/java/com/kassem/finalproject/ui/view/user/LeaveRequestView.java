@@ -19,6 +19,7 @@ import com.kassem.finalproject.utils.AppUtils;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -101,6 +102,8 @@ public class LeaveRequestView extends VerticalLayout{
 		return new FormLayout(usernameTxt,lastTxt,departmentTxt,addressDuringLeaveTxt,leaveTypeCbx,numberOfDaysTxt,startDateField,endDateField,saveBtn);  
 	}
 	private void save(){
+		String message = "";
+		Dialog d = new Dialog();
 		LeaveRequest leave = new LeaveRequest();
 		String username = usernameTxt.getValue();
 		String lastName = lastTxt.getValue();
@@ -110,7 +113,26 @@ public class LeaveRequestView extends VerticalLayout{
 		LocalDate startDate = startDateField.getValue();
 		LocalDate endDate = endDateField.getValue();
 		String leaveType = leaveTypeCbx.getValue();
-		
+		LocalDate now = LocalDate.now();
+		if(now.compareTo(startDate)>0) {
+			message = "Date should be after now";
+			d.add(new Label(message));
+			d.open();
+			return ;
+		}
+		if(startDate.compareTo(endDate)>0) {
+			message = "Start Date should be after End date";
+			d.add(new Label(message));
+			d.open();
+			return ;
+		}
+		if(daysBetween(startDate,endDate) > nbOfDay) {
+			message = "Start Date end date should be less then number of days";
+			d.add(new Label(message));
+			d.open();
+			return ;
+		}
+			
 		leave.setId(Long.valueOf( new Random().nextInt(1000000 + 1)));
 		leave.setUserid(String.valueOf(sessionInfo.getCurrentUser().getId()));
 		leave.setUserName(username);
@@ -122,7 +144,11 @@ public class LeaveRequestView extends VerticalLayout{
 		leave.setEndDate(endDate);
 		leave.setLeaveType(leaveType);
 		leaveRequestService.save(leave);
-		
+		d.add(new Label("Your leave request has successfully sent to manager"));
+		d.open();
 	}
 
+	private int daysBetween(LocalDate d1, LocalDate d2) {
+        return d2.getDayOfMonth() - d1.getDayOfMonth();
+    }
 }

@@ -1,5 +1,6 @@
 package com.kassem.finalproject.ui.view.category;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -13,8 +14,6 @@ import com.kassem.finalproject.model.Applicant;
 import com.kassem.finalproject.model.Applicant.ConnectionWay;
 import com.kassem.finalproject.model.Applicant.Degrees;
 import com.kassem.finalproject.model.JobOffer;
-import com.kassem.finalproject.model.LeaveRequest;
-import com.kassem.finalproject.repository.ApplicantRepository;
 import com.kassem.finalproject.service.ApplicantService;
 import com.kassem.finalproject.service.JobOfferService;
 import com.kassem.finalproject.utils.AppUtils;
@@ -53,14 +52,15 @@ public class ApplyNow extends VerticalLayout  {
      
      @PostConstruct
 	private void initUi() {
+    	 setAlignItems(Alignment.CENTER);
 		Label greeting = new Label("Welcome to Our Company..We are Hiring!");
 		greeting.getElement().getStyle().set("font-weight", "bold");
 		greeting.getElement().getStyle().set("font-size", "150%");
-		Label apply = new Label("Please apply to an application...Good Luck :)");
+		/*//Label apply = new Label("Please apply to an application...Good Luck :)");
 		apply.getElement().getStyle().set("font-weight", "bold");
 		apply.getElement().getStyle().set("font-size", "100%");
-		
-		add(greeting,apply);
+		*/
+		add(greeting);
 		
 		// add grid to view
 		List<JobOffer> personList = jobOfferService.getAllOffer();
@@ -133,9 +133,15 @@ public class ApplyNow extends VerticalLayout  {
 		seniorityLevel.setValue(offer.getSeniorityLevel() != null ? offer.getSeniorityLevel() : "");
 		Dialog dialog = new Dialog();
 		Button sendButton = new Button("Apply Now", event -> {
+			if(checkdate(offer)) {
+				Dialog d = new Dialog();
+				d.add(new Label("Sorry the time for this application is over"));
+				d.open();
+			}else {
 			Dialog d = getDialog(offer.getId());
 			d.open();
 		    dialog.close();
+			}
 		});
 		Button cancelButton = new Button("Cancel", event -> {
 		    dialog.close();
@@ -213,9 +219,9 @@ public class ApplyNow extends VerticalLayout  {
     				 ,nbOfYear,  company, role,  comment,expStartDate,  expEndDate,connectionWayCbx);
  		    dialog.close();
  		});
-    	 if(firstName.isEmpty()) {
+    	/* if(firstName.isEmpty()) {
     		 sendButton.setEnabled(false);
-    	 }
+    	 }*/
  		Button cancelButton = new Button("Cancel", event -> {
  		    dialog.close();
  		});
@@ -284,5 +290,12 @@ public class ApplyNow extends VerticalLayout  {
 		applicant.setConnectingWay(connectionWayCbx.getValue().toString());
 		
 		applicantService.saveApplicant(applicant);
+	}
+	
+	private boolean checkdate(JobOffer jobOffer) {
+		if(LocalDate.now().equals(jobOffer.getDeadLine())) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -26,9 +26,10 @@ public class User {
 	private LocalDate startDate;
 	private String position;
 	private Double nbOfLeaves;
+	private Integer firstLogin;
 	
 	public User(String username,String firstName,String lastName,String address, String password,String email,String role ,Integer age,String status,
-			String department,Integer salary,LocalDate startDate,String position,Double nbOfLeaves) {
+			String department,Integer salary,LocalDate startDate,String position,Double nbOfLeaves,Integer firstLogin) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -40,6 +41,7 @@ public class User {
 		this.startDate = startDate;
 		this.position = position;
 		this.nbOfLeaves = nbOfLeaves;
+		this.firstLogin = firstLogin;
 	}
 	public User() {
 		
@@ -136,6 +138,13 @@ public class User {
 	}
 	public void setNbOfLeaves(Double nbOfLeaves) {
 		this.nbOfLeaves = nbOfLeaves;
+	}
+
+	public Integer getFirstLogin() {
+		return firstLogin;
+	}
+	public void setFirstLogin(Integer firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 
 	public enum RoleValues{

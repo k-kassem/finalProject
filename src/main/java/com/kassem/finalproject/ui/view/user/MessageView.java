@@ -37,9 +37,13 @@ public class MessageView extends VerticalLayout{
 	private SessionInfo session;
 	@PostConstruct
 	public void initUi() {
+		setAlignItems(Alignment.CENTER);
+		Label label = new Label("Messages");
+		label.getElement().getStyle().set("font-weight", "bold");
+		label.getElement().getStyle().set("font-size", "150%");
 		session = new SessionInfo();
 		List<Message> messages = messageService.getAllMessageByUserId(String.valueOf(session.getCurrentUser().getId()));
-		add(getGrid(messages));
+		add(label,getGrid(messages));
 		
 	}
 	public Dialog getFormAfterSelection(Message message) {
