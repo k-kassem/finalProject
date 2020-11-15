@@ -58,7 +58,7 @@ public class UserView extends VerticalLayout {
 	@PostConstruct
 	private void initUi() {
 
-		List<User> data = userService.getAllUser();
+		List<User> data = userService.getAllUsers();
 		UserDataProvider userDataProvider = new UserDataProvider(data);
         setWidth("100%");
         Crud<User> userCrud = getUserCrud(userDataProvider);

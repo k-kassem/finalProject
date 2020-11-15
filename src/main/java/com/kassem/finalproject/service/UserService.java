@@ -39,6 +39,9 @@ public class UserService {
 	public User getUserById(Long id) {
 		return userRepository.findById(id).get();
 	}
+	public List<User> getAllUsers(){
+		return userRepository.getAllusers();
+	}
 	public String updateUser(Long id,String firstName,String lastName,String email,String address,String password,String status) {
 		User user = getUserById(id);
 		user.setFirstName(firstName);
@@ -48,5 +51,8 @@ public class UserService {
 		user.setStatus(status);
 		userRepository.save(user);
 		return "User Updated";
+	}
+	public void UpdatePassword(User user) {
+		userRepository.save(user);
 	}
 }
