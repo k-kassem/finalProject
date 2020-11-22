@@ -44,6 +44,7 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
     private TextField usernameField;
     private PasswordField passwordField;
     private Button loginButton;
+    private Button forgotPasswordBtn;
 
     private Label logoutLabel;
 
@@ -77,12 +78,20 @@ public class LoginComponent extends VerticalLayout implements HasUrlParameter<St
         });
 
         loginButton = new Button("Login");
+        loginButton.setSizeFull();
         loginButton.addClickListener(e -> {
             logger.debug("Login button pressed");
             loginAction();
         });
+        forgotPasswordBtn = new Button("Forgot Password");
+        forgotPasswordBtn.setSizeFull();
+        forgotPasswordBtn.addClickListener(e -> {
+            logger.debug("Forget Password button pressed");
+            forgotPasswordBtn.getUI().ifPresent(ui -> ui.navigate("forgotpassword"));
+        });
 
-        VerticalLayout layout = new VerticalLayout(usernameField, passwordField, loginButton);
+       // HorizontalLayout loginAndForgetHLayout = new HorizontalLayout(loginButton,forgotPasswordBtn);
+        VerticalLayout layout = new VerticalLayout(usernameField, passwordField,loginButton,forgotPasswordBtn );
         Image img1 = new Image("images/test2.jpg","test");
         img1.setWidth("700px");
         img1.setHeight("350px");
